@@ -8,6 +8,7 @@ The VM and the switchs shares a management LAN.
 ![Lab](/01_build_the_lan/lab.png)
 
 ## Directory layout ##
+```
 + /
  \
   | + inventory
@@ -43,6 +44,7 @@ The VM and the switchs shares a management LAN.
   |
   | credential.yml
   | playbook.yml
+  ```
 
 ### Reports ###
 reports directory is in gitignore file, thus not in the repository.
