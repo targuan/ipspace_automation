@@ -1,0 +1,8 @@
+hostname validation failed on ta-leaf1:
+The hostname is not correctly set: expecting ta-leaf1, got spine1
+hostname validation failed on ta-leaf2:
+The hostname is not correctly set: expecting ta-leaf2, got spine2
+hostname validation failed on ta-spine1:
+The hostname is not correctly set: expecting ta-spine1, got leaf1
+hostname validation failed on ta-spine2:
+The hostname is not correctly set: expecting ta-spine2, got leaf2

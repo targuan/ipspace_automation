@@ -1,0 +1,28 @@
+---
+- name: Gather management facts
+  eos_command:
+    provider: "{{ provider }}"
+    validate_certs: false
+    commands:
+      - show hostname
+      - show interfaces management 1
+  register: conf
+- name: Gather management facts
+  eos_command:
+    provider: "{{ provider }}"
+    transport: cli
+    commands:
+      - show running-config interfaces management 1
+  register: mgmt_run
+- name: Validate hostname
+  set_fact:
+    errors: "{{ errors + [{'info':'hostname','message':'The hostname is not correctly set: expecting {0}, got {1}'.format(inventory_hostname,conf.stdout.0.hostname)}] }}"
+  when: "{{ conf.stdout.0.hostname != inventory_hostname }}"
+- name: Validate management ip
+  set_fact:
+    errors: "{{ errors + [{'info':'mgmt_ip','message':'The management ip is not set on mgmt1: expecting {0}, got {1}'.format(ansible_host, conf.stdout.1.interfaces.Management1.interfaceAddress.0.primaryIp.address)}] }}"
+  when: "{{ conf.stdout.1.interfaces.Management1.interfaceAddress.0.primaryIp.address != ansible_host }}"
+- name: validate lldp mgmt
+  set_fact:
+    errors: "{{ errors + [{'info':'mgmt_lldp','message':'lldp has not been disabled on management interface'}] }}"
+  when: "{{ 'no lldp transmit' not in mgmt_run.stdout.0 or 'no lldp receive' not in mgmt_run.stdout.0 }}"

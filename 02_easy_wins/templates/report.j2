@@ -1,0 +1,4 @@
+{% for error in errors %}
+{{ error.info }} validation failed on {{ inventory_hostname }}:
+{{ error.message }}
+{% endfor %}

@@ -1,0 +1,18 @@
+- name: Gather facts
+  eos_facts:
+    provider: "{{ provider }}"
+    validate_certs: false
+  register: test
+  when: '{{ "spine" in group_names }}'
+- name: Test spine neighbor
+  set_fact: 
+    errors: "{{ errors + [ {'info':'spine_nei','message':'spine {0} is connected to another spine {1}'.format(inventory_host, neighbor.value.0.host)} ] }}"
+  with_dict: "{{ ansible_net_neighbors|default({}) }}"
+  loop_control:
+    loop_var: neighbor
+  when: 
+    - '{{ "spine" in group_names }}'
+    - '{{ "spine" in neighbor.value.0.host }}' 
+- debug:
+    var: nei
+  when: '{{ "spine" in group_names }}'

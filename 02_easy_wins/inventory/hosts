@@ -1,0 +1,15 @@
+[all]
+ta-spine1 ansible_host=10.253.240.229
+ta-spine2 ansible_host=10.253.240.230
+ta-leaf1 ansible_host=10.253.240.227
+ta-leaf2 ansible_host=10.253.240.228
+
+
+[spine]
+ta-spine1
+ta-spine2
+
+
+[leaf]
+ta-leaf1
+ta-leaf2
